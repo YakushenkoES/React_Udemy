@@ -10,18 +10,9 @@ import './app.css';
 export default class App extends Component {
     state = {
         todoData: [
-            {
-                label: 'Drink coffee',
-                id: 1,
-            },
-            {
-                label: 'Make awesome App',
-                id: 2,
-            },
-            {
-                label: 'Have a lunch',
-                id: 3,
-            },
+            this.createItem('Drink coffee'),
+            this.createItem( 'Make awesome App'),
+            this.createItem( 'Have a lunch')
         ],
     };
     deleteItem = id => {
@@ -44,10 +35,7 @@ export default class App extends Component {
 
             const newData = [
                 ...state.todoData,
-                {
-                    label: text,
-                    id: this.uuidv4(),
-                },
+                this.createItem(text)
             ];
 
             return {
@@ -56,20 +44,43 @@ export default class App extends Component {
         });
     };
 
+    createItem (label){
+        return{
+            label,
+            id: this.uuidv4(),
+            important: false,
+            done:false,
+        }
+    }
+    toggleProperty=(arr, id, propName)=>{
+            const ind = arr.findIndex(td=>td.id===id);
+            const old = arr[ind];
+            const newItem = {...old, [propName]: !old[propName]};
+
+            return [...arr.slice(0,ind), newItem, ...arr.slice(ind+1)];
+    }
     onToggleImportant = id =>{
-        const ind = this.state.todoData.findIndex(td=>td.id===id);
-        console.log("important", id);
+        this.setState(({todoData})=>{
+            return {
+                todoData: this.toggleProperty(todoData, id , "important")
+            };
+        });
     }
     onToggleDone = id =>{
-        console.log("done", id);
-        const ind = this.state.todoData.findIndex(td=>td.id===id);
+        this.setState(({todoData})=>{
+            return {
+                todoData: this.toggleProperty(todoData, id , "done")
+            };
+        });
     }
 
     render() {
         const { todoData } = this.state;
+        const doneQty = todoData.filter(td=>td.done).length;
+        const todoQty = todoData.length - doneQty;
         return (
             <div className="app">
-                <AppHeader done={3} toDo={1} />
+                <AppHeader done={doneQty} toDo={todoQty} />
                 <div className="top-panel">
                     <SearchPanel />
                     <ItemStatusFilter />
@@ -82,7 +93,7 @@ export default class App extends Component {
         );
     }
 
-    uuidv4 = () => {
+    uuidv4() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = (Math.random() * 16) | 0,
                 v = c === 'x' ? r : (r & 0x3) | 0x8;
