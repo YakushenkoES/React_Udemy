@@ -1,0 +1,7 @@
+.item-add-form {
+    display: flex;
+}
+
+.item-add-form .item-add-input {
+    margin-right: 1rem;
+}
