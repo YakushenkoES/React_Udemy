@@ -3,34 +3,37 @@ import './item-add-form.css';
 
 export default class ItemAddForm extends Component {
     state = {
-        text: '',
+        label: '',
     };
-    onTextChanged = text => {
+
+    onLabelChanged = e => {
         this.setState({
-            text
+            label: e.target.value,
+        });
+    };
+
+    onSubmit = e => {
+        e.preventDefault();
+        const { onAddItem } = this.props;
+        onAddItem(this.state.label);
+        this.setState({
+            label: '',
         });
     };
     render() {
-        const { onAddItem } = this.props;
         return (
-            <div className="item-add-form">
+            <form className="item-add-form" onSubmit={this.onSubmit}>
                 <input
-                    onChange={ (e)=>{this.onTextChanged(e.target.value);}}
+                    onChange={this.onLabelChanged}
                     type="text"
+                    placeholder="What needs to be done"
                     className="form-control item-add-input"
-                    value={this.state.text}
+                    value={this.state.label}
                 />
-                <button
-                    type="button"
-                    className="btn btn-outline-success"
-                    onClick={() => {
-                        onAddItem(this.state.text);
-                        this.onTextChanged("");
-                    }}
-                >
+                <button type="submit" className="btn btn-outline-success">
                     <i className="fa fa-plus" />
                 </button>
-            </div>
+            </form>
         );
     }
 }
