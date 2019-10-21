@@ -2,31 +2,36 @@ import React, { Component } from 'react';
 import './item-status-filter.css';
 
 export default class ItemStatusFilter extends Component {
-    onBtnStatusClick = e => {
-        const { onChange } = this.props;
-        const status = e.target.getAttribute('data-val');
-        onChange(status);
-    };
+   
+    butttons=[
+        {
+            val : "all",
+            title : "All",
+        },
+        {
+            val : "done",
+            title : "Done",
+        },
+        {
+            val : "active",
+            title : "Active",
+        }
+    ];
     render() {
         const { doneState } = this.props;
-
-        const statusState = [
-            doneState === '' || doneState === 'all',
-            doneState === 'active',
-            doneState === 'done',
-        ];
-
-        const statusVals = ['all', 'active', 'done'];
-        const statusTitles = statusVals.map(v => v[0].toUpperCase() + v.slice(1));
-        const els = statusVals.map((status, index) => {
+        
+        const els = this.butttons.map( btn => {
+            const isChecked = btn.val === doneState;
+            const clazz = isChecked ? "btn-info" : 'btn-outline-secondary';
             return (
                 <button
                     type="button"
-                    data-val={status}
-                    className={statusState[index] ? 'btn btn-info' : 'btn btn-outline-secondary'}
-                    onClick={this.onBtnStatusClick}
+                    data-val={btn.val}
+                    className={'btn '+ clazz}
+                    onClick={() => {this.props.onChange(btn.val)}}
+                    key={btn.val}
                 >
-                    {statusTitles[index]}
+                    {btn.title}
                 </button>
             );
         });
