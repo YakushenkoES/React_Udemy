@@ -2,7 +2,7 @@ import React from "react";
 import icon from "./death-star.png";
 import "./error-indicator.css";
 
-const ErrorIndicator = () => {
+const ErrorIndicator = () => { 
     return (
         <div className="error-indicator">
             <img src={icon} alt="error icon" />
@@ -10,6 +10,6 @@ const ErrorIndicator = () => {
             <span>something has gone terribly wrong</span>
             <span>(but we already sent droids to fix it)</span>
         </div>
-    );
+    )
 };
 export default ErrorIndicator;

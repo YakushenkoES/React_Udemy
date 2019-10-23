@@ -11,6 +11,7 @@
     "jest": true
 },
 "rules": {
+    "semi": ["error", "always"],
     "max-len": ["error", {"code": 100}],
     "prefer-promise-reject-errors": ["off"],
     "react/jsx-filename-extension": ["off"],
