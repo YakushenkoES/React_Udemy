@@ -2,21 +2,21 @@ import React, { Component } from "react";
 
 import Header from "../header";
 import RandomPlanet from "../random-planet";
-import PeoplePage from '../people-page';
-import PlanetPage from '../planet-page';
-import StarshipPage from '../starship-page';
-
+import PeoplePage from "../people-page";
+import PlanetPage from "../planet-page";
+import StarshipPage from "../starship-page";
+import ItemList from "../item-list";
 import ErrorButton from "../error-button";
-import ErrorIndicator from "../error-indicator";
+import ErrorBoundary from "../error-boundary";
+import SwapiService from "../../services/swapi";
 
 import "./app.css";
 
 export default class App extends Component {
     state = {
-        showRandomPlanet: true,
-        hasError: false
+        showRandomPlanet: true
     };
-
+    swapi = new SwapiService();
     toggleRandomPlanet = () => {
         this.setState(({ showRandomPlanet }) => {
             return {
@@ -24,20 +24,14 @@ export default class App extends Component {
             };
         });
     };
-    
-    componentDidCatch() {
-        console.log("componentDidCatch");
-        this.setState({ hasError: true });
-    }
+ 
 
     render() {
-        if (this.state.hasError) {
-            return <ErrorIndicator />;
-        }
 
         const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
         return (
-            <div className="container">
+            <ErrorBoundary>
+                <div className="container">
                 <Header />
                 {planet}
 
@@ -46,10 +40,29 @@ export default class App extends Component {
                 </button>
                 <ErrorButton />
 
-                <PeoplePage/>
-                <PlanetPage/>
-                <StarshipPage/>
+                <PeoplePage />
+
+                <div className="row mb2">
+                    <div className="col-md-6">
+                        <ItemList
+                            onItemSelected={this.onItemSelected}
+                            getData={this.swapi.getAllPlanets}
+                            
+                        >
+                            {
+                                (i) => (
+                                     <span>{i.name} <button>!</button></span>
+                                )
+                            }
+                        </ItemList>
+                    </div>
+                    <div className="col-md-6">
+                    </div>
+                </div>
+                <StarshipPage />
             </div>
+            </ErrorBoundary>
+            
         );
     }
 }
