@@ -2,15 +2,12 @@ import React, { Component } from "react";
 
 import Header from "../header";
 import RandomPlanet from "../random-planet";
-import PeoplePage from "../people-page";
-import PlanetPage from "../planet-page";
-import StarshipPage from "../starship-page";
-import ItemList from "../item-list";
 import ErrorButton from "../error-button";
 import ErrorBoundary from "../error-boundary";
 import SwapiService from "../../services/swapi";
-
+import Row from "../row";
 import "./app.css";
+import { PersonList, PlanetList, StarshipList, PersonDetails, PlanetDetails, StarshipDetails } from "../sw-components";
 
 export default class App extends Component {
     state = {
@@ -24,45 +21,36 @@ export default class App extends Component {
             };
         });
     };
- 
+
+    componentDidMount() {
+        this.swapi.getAllPeopleRandom().then((ps) => console.log("random people :", ps));
+        this.swapi.getAllPlanetsRandom().then((ps) => console.log("random planets :", ps));
+        this.swapi.getAllStarshipsRandom().then((ps) => console.log("random starships :", ps));
+    }
 
     render() {
-
         const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
+        const { getPerson, getStarship, getPersonImageUrl, getStarshipImageUrl } = this.swapi;
+
         return (
             <ErrorBoundary>
                 <div className="container">
-                <Header />
-                {planet}
+                    <Header />
 
-                <button className="toggle-planet btn btn-warning btn-lg" onClick={this.toggleRandomPlanet}>
+                    <Row left={<PersonList onItemSelected={this.onItemSelected} />} right={PersonDetails(62)} />
+                    <Row left={<PlanetList onItemSelected={this.onItemSelected} />} right={PlanetDetails(16)} />
+                    <Row left={<StarshipList onItemSelected={this.onItemSelected} />} right={StarshipDetails(12)} />
+
+                    {/* {planet} */}
+
+                    {/* <button className="toggle-planet btn btn-warning btn-lg" onClick={this.toggleRandomPlanet}>
                     Toggle Random Planet
                 </button>
-                <ErrorButton />
-
-                <PeoplePage />
-
-                <div className="row mb2">
-                    <div className="col-md-6">
-                        <ItemList
-                            onItemSelected={this.onItemSelected}
-                            getData={this.swapi.getAllPlanets}
-                            
-                        >
-                            {
-                                (i) => (
-                                     <span>{i.name} <button>!</button></span>
-                                )
-                            }
-                        </ItemList>
-                    </div>
-                    <div className="col-md-6">
-                    </div>
+                <ErrorButton /> 
+                    
+                 <PeoplePage />*/}
                 </div>
-                <StarshipPage />
-            </div>
             </ErrorBoundary>
-            
         );
     }
 }

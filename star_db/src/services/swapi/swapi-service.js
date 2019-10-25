@@ -1,6 +1,6 @@
 export default class SwapiService {
     _apiBase = "https://swapi.co/api";
-
+    _imageBase = "https://starwars-visualguide.com/assets/img";
     getResource = async (url) => {
         const res = await fetch(`${this._apiBase}${url}`);
         if (!res.ok) {
@@ -9,12 +9,30 @@ export default class SwapiService {
         const body = await res.json();
         return body;
     };
+    getAllRandom = async (get, NTotal, N) => {
+        const ids=[];
+        for(let i = 0; i< N ;i++){
+            ids.push(Math.round(Math.random()*NTotal));
+        }
+        const res  = await Promise.allSettled(ids.map(id=>get(id)));
+        return res.map(r=>r.status==="fulfilled"?r.value:null);
+    };
+    _extractId = (url) => {
+        const idRegExp = /\/([0-9]*)\/$/;
+        const id = url.match(idRegExp)[1];
+        return id;
+    };
 
     // Person____________________________________
     getAllPeople = async () => {
         const res = await this.getResource("/people/");
         return res.results.slice(0, 6).map(this._transformPerson);
     };
+    getAllPeopleRandom = async () =>{
+        const res = await this.getResource("/people/");
+        return await this.getAllRandom(this.getPerson,res.count, 6);
+    };
+    
 
     getPerson = async (id) => {
         const person = await this.getResource(`/people/${id}/`);
@@ -30,17 +48,22 @@ export default class SwapiService {
             eyeColor: p.eye_color
         };
     };
-    // End. Person____________________________________
-    _extractId = (url) => {
-        const idRegExp = /\/([0-9]*)\/$/;
-        const id = url.match(idRegExp)[1];
-        return id;
+    getPersonImageUrl = ({ id }) => {
+        return this._imageBase + `/characters/${id}.jpg`;
     };
+
+    // End. Person____________________________________
+
+    
 
     // Planets_____________________________________________
     getAllPlanets = async () => {
         const res = await this.getResource("/planets/");
         return res.results.map(this._transformPlanet);
+    };
+    getAllPlanetsRandom = async () =>{
+        const res = await this.getResource("/planets/");
+        return await this.getAllRandom(this.getPlanet,res.count, 6);
     };
 
     getPlanet = async (id) => {
@@ -57,6 +80,9 @@ export default class SwapiService {
             diameter: planet.diameter
         };
     };
+    getPlanetImageUrl = ({ id }) => {
+        return this._imageBase + `/planets/${id}.jpg`;
+    };
     // End. Planets______________________________________
 
     // Starships_________________________________________
@@ -66,7 +92,7 @@ export default class SwapiService {
             name: ship.name,
             model: ship.model,
             manufacturer: ship.manufacturer,
-            costInCredits: ship.costInCredits,
+            costInCredits: ship.cost_in_credits,
             length: ship.length,
             crew: ship.crew,
             passengers: ship.passengers,
@@ -78,10 +104,18 @@ export default class SwapiService {
         const res = await this.getResource("/starships/");
         return res.results.map(this._transformShip);
     };
+    getAllStarshipsRandom = async () =>{
+        const res = await this.getResource("/starships/");
+        return await this.getAllRandom(this.getStarship,res.count, 6);
+    };
+
 
     getStarship = async (id) => {
         const ship = await this.getResource(`/starships/${id}/`);
         return this._transformShip(ship);
+    };
+    getStarshipImageUrl = ({ id }) => {
+        return this._imageBase + `//starships/${id}.jpg`;
     };
     //End. Starships_________________________________________
 }
