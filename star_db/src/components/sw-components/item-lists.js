@@ -2,7 +2,7 @@ import React from "react";
 import SwapiService from "../../services/swapi";
 import ItemList from "./../item-list";
 import { withData, withChildFunction } from "../../hoc-helpers";
-
+import {SwapiServiceConsumer} from '../swapi-service-context';
 const { getAllPeopleRandom, getAllPlanetsRandom, getAllStarshipsRandom } = new SwapiService();
 
 const renderName = ({ name }) => {

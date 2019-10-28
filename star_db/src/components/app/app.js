@@ -5,15 +5,18 @@ import RandomPlanet from "../random-planet";
 import ErrorButton from "../error-button";
 import ErrorBoundary from "../error-boundary";
 import SwapiService from "../../services/swapi";
+import DummySwapiService from '../../services/dummy-swapi-service';
+
 import Row from "../row";
 import "./app.css";
 import { PersonList, PlanetList, StarshipList, PersonDetails, PlanetDetails, StarshipDetails } from "../sw-components";
+import {SwapiServiceProvider} from '../swapi-service-context';
 
 export default class App extends Component {
     state = {
         showRandomPlanet: true
     };
-    swapi = new SwapiService();
+    swapi = new DummySwapiService()//;new SwapiService();
     toggleRandomPlanet = () => {
         this.setState(({ showRandomPlanet }) => {
             return {
@@ -30,16 +33,16 @@ export default class App extends Component {
 
     render() {
         const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
-        const { getPerson, getStarship, getPersonImageUrl, getStarshipImageUrl } = this.swapi;
 
         return (
             <ErrorBoundary>
+                <SwapiServiceProvider value={this.swapi}>
                 <div className="container">
                     <Header />
 
-                    <Row left={<PersonList onItemSelected={this.onItemSelected} />} right={PersonDetails(62)} />
-                    <Row left={<PlanetList onItemSelected={this.onItemSelected} />} right={PlanetDetails(16)} />
-                    <Row left={<StarshipList onItemSelected={this.onItemSelected} />} right={StarshipDetails(12)} />
+                    <Row left={<PersonList onItemSelected={this.onItemSelected} />} right={PersonDetails(63)} />
+                    <Row left={<PlanetList onItemSelected={this.onItemSelected} />} right={PlanetDetails(17)} />
+                    <Row left={<StarshipList onItemSelected={this.onItemSelected} />} right={StarshipDetails(13)} />
 
                     {/* {planet} */}
 
@@ -50,6 +53,7 @@ export default class App extends Component {
                     
                  <PeoplePage />*/}
                 </div>
+                </SwapiServiceProvider>
             </ErrorBoundary>
         );
     }
