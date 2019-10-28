@@ -27,10 +27,12 @@ const ItemDetailsInfo = (props) => {
 
             <div className="card-body">
                 <h4>{item.name}</h4>
-                <ul className="list-group list-group-flush">{React.Children.map(props.children, (ch) => {
-                    const newCh = React.cloneElement(ch, {item});
-                    return newCh;
-                })}</ul>
+                <ul className="list-group list-group-flush">
+                    {React.Children.map(props.children, (ch) => {
+                        const newCh = React.cloneElement(ch, { item });
+                        return newCh;
+                    })}
+                </ul>
                 <ErrorButton />
             </div>
         </React.Fragment>
@@ -82,7 +84,11 @@ export default class ItemDetails extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.props.itemId !== prevProps.itemId) {
+        if (
+            this.props.itemId !== prevProps.itemId ||
+            this.props.getData !== prevProps.getData ||
+            this.props.getImageUrl !== prevProps.getImageUrl
+        ) {
             this.updateItem();
         }
     }

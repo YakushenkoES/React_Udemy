@@ -1,5 +1,4 @@
 export default class DummySwapiService {
-
   _people = [
     {
       id: 1,

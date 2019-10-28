@@ -12,7 +12,7 @@ const ItemList = (props)=> {
         }
             const { id } = item;
             return (
-                <li className="list-group-item" key={id} onClick={() => onItemSelected(id)}>
+                <li className="list-group-item" key={id + +Date.now()} onClick={() => onItemSelected(id)}>
                     {renderLabel(item)}
                 </li>
             );
