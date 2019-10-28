@@ -17,4 +17,4 @@ const mapMethodsToProps = (swapi) => {
         getImageUrl: swapi.getPlanetImageUrl
     };
 };
-export default withSwapiService(PlanetDetails, mapMethodsToProps);
+export default withSwapiService(mapMethodsToProps)(PlanetDetails);

@@ -23,7 +23,7 @@ const ItemDetailsInfo = (props) => {
     const { item, image } = props;
     return (
         <React.Fragment>
-            <img className="item-image" src={image} />
+            <img className="item-image" src={image} alt="details"/>
 
             <div className="card-body">
                 <h4>{item.name}</h4>
@@ -59,7 +59,7 @@ export default class ItemDetails extends Component {
             this.setState({
                 item: null,
                 loading: false,
-                error: true,
+                error: false,
                 image: null
             });
             return;

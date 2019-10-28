@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import SwapiService from "../../services/swapi";
 import Spinner from "../spinner";
-import ErrorIndicator from '../error-indicator';
+import ErrorIndicator from "../error-indicator";
+import PropTypes from "prop-types";
 import "./random-planet.css";
 
 const PlanetView = ({ planet = {} }) => {
@@ -36,6 +37,11 @@ const PlanetView = ({ planet = {} }) => {
 };
 
 export default class RandomPlanet extends Component {
+    static defaultProps = { updateInterval_ms: 5000 };
+    static propTypes = {
+        updateInterval_ms: PropTypes.number // PropTypes.number.isRequired
+    };
+
     swapiService = new SwapiService();
     state = {
         planet: undefined,
@@ -43,15 +49,12 @@ export default class RandomPlanet extends Component {
         error: false
     };
 
-    constructor() {
-        super();
-    }
-
-    componentDidMount(){
+    componentDidMount() {
+        const { updateInterval_ms } = this.props;
         this.updatePlanet();
-        this.interval =  setInterval(this.updatePlanet, 10000);
+        this.interval = setInterval(this.updatePlanet, updateInterval_ms);
     }
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearInterval(this.interval);
     }
 
@@ -59,7 +62,7 @@ export default class RandomPlanet extends Component {
         this.setState({
             planet,
             loading: false,
-            error: false,
+            error: false
         });
     };
     onError = (err) => {
@@ -69,18 +72,20 @@ export default class RandomPlanet extends Component {
         });
     };
 
-    updatePlanet = ( ) => {
-        const id = Math.floor(Math.random() * 61) ;
+    updatePlanet = () => {
+        const id = Math.floor(Math.random() * 61);
         this.swapiService.getPlanet(id).then(this.onPlanetLoaded).catch(this.onError);
-    }
+    };
 
     render() {
         const { planet, loading, error } = this.state;
 
         return (
             <div className="random-planet jumbotron rounded">
-                {error ? <ErrorIndicator/> : loading ? <Spinner /> : <PlanetView planet={planet} />}
+                {error ? <ErrorIndicator /> : loading ? <Spinner /> : <PlanetView planet={planet} />}
             </div>
         );
     }
 }
+
+//RandomPlanet.defaultProps={updateInterval_ms: 5000};

@@ -1,5 +1,5 @@
 import React from 'react';
-const withChildFunction=(Wrapped, fn)=>{
+const withChildFunction= fn=>Wrapped=>{
     return class extends React.Component{
         render(){
             return (
