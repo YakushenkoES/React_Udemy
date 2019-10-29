@@ -48,6 +48,15 @@ export default class DummySwapiService {
     }
   ];
 
+  _vehicles=[
+      {
+          id:1,
+          name: "Name [TEST DATA]",
+          model: "Model [TEST DATA]",
+          costInCredits: 123
+      }
+  ];
+
   getAllPeople = async () => {
     return this._people;
   };
@@ -70,6 +79,19 @@ export default class DummySwapiService {
     return this._planets[0]
   };
 
+
+  getAllVehicles = async () => {
+    return this._vehicles;
+  };
+  getAllVehiclesRandom = async ()=>{
+    return await this.getAllVehicles();
+}
+
+  getVehicle = async () => {
+    return this._vehicles[0]
+  };
+
+
   getAllStarships = async () => {
     return this._starships;
   };
@@ -91,5 +113,8 @@ export default class DummySwapiService {
 
   getPlanetImageUrl = () => {
     return `https://placeimg.com/400/400/nature`
+  };
+  getVehicleImageUrl = () => {
+    return `https://placeimg.com/400/400/tech`
   };
 }

@@ -5,7 +5,7 @@ import SwapiServise from "../../services/swapi";
 import Spinner from "../../components/spinner";
 import ErrorIndicator from "../../components/error-indicator";
 import ErrorButton from "../error-button";
-
+import { Link } from "react-router-dom";
 const Record = ({ item, field, label }) => {
     return (
         <li className="list-group-item">
@@ -20,10 +20,14 @@ const ItemDetailsInfo = (props) => {
     if (!props.item) {
         return <span>Select a item from List!</span>;
     }
-    const { item, image } = props;
+    const { item, image, page } = props;
+
     return (
         <React.Fragment>
-            <img className="item-image" src={image} alt="details"/>
+            
+            <Link to={`${page}/${item.id}`}>
+                <img className="item-image" src={image} alt="details"/>
+            </Link>
 
             <div className="card-body">
                 <h4>{item.name}</h4>
@@ -44,7 +48,8 @@ export default class ItemDetails extends Component {
         item: null,
         loading: false,
         error: false,
-        image: null
+        image: null,
+        page:null
     };
     swapi = new SwapiServise();
 
@@ -53,7 +58,7 @@ export default class ItemDetails extends Component {
     }
     updateItem() {
         this.setState({ loading: true, error: false });
-        const { itemId, getData, getImageUrl } = this.props;
+        const { itemId, getData, getImageUrl, page } = this.props;
 
         if (!itemId) {
             this.setState({
@@ -70,7 +75,8 @@ export default class ItemDetails extends Component {
                     item,
                     loading: false,
                     error: false,
-                    image: getImageUrl(item)
+                    image: getImageUrl(item),
+                    page
                 });
             })
             .catch(() => {
@@ -94,7 +100,7 @@ export default class ItemDetails extends Component {
     }
 
     render() {
-        const { error, loading, item, image } = this.state;
+        const { error, loading, item, image, page } = this.state;
 
         return (
             <div className="item-details card">
@@ -103,7 +109,7 @@ export default class ItemDetails extends Component {
                 ) : loading ? (
                     <Spinner />
                 ) : (
-                    <ItemDetailsInfo item={item} image={image}>
+                    <ItemDetailsInfo item={item} image={image} page={page}>
                         {this.props.children}
                     </ItemDetailsInfo>
                 )}

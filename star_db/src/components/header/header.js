@@ -1,27 +1,39 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 import "./header.css";
 
-const Header = ({onServiceChange}) =>{
-    return(
+const Header = ({ onServiceChange }) => {
+    return (
         <div className="header d-flex">
-        <h3>
-            <a href="#">
-            Star DB
-            </a>
-        </h3>
-        <ul className="d-flex">
-            <li>
-            <a href="#">People</a>
-            </li>
-            <li>
-            <a href="#">Planets</a>
-            </li>
-            <li>
-            <a href="#">Starships</a>
-            </li>
-        </ul>
-        <button className="btn btn-primary btn-sm"
-        onClick={onServiceChange}>Change service</button>
+            <h3>
+                <Link to="/">Start DB</Link>
+            </h3>
+            <ul className="d-flex">
+                <li>
+                    <Link to="/people/">People</Link>
+                </li>
+                <li>
+                    <Link to="/planets/">Planets</Link>
+                </li>
+                <li>
+                    <Link to="/starships/">Starships</Link>
+                </li>
+                <li>
+                    <Link to="/vehicles/">Vehicles</Link>
+                </li>
+                <li>
+                    <Link to="/login/">Login</Link>
+                </li>
+                <li>
+                    <Link to="/secret/">Secret</Link>
+                </li>
+                
+                
+                
+            </ul>
+            <button className="btn btn-primary btn-sm" onClick={onServiceChange}>
+                Change service
+            </button>
         </div>
     );
 };

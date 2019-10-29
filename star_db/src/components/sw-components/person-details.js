@@ -15,7 +15,8 @@ const PersonDetails = (props) => {
 const mapMethodsToProps=(swapi)=>{
     return{
         getData: swapi.getPerson,
-        getImageUrl:swapi.getPersonImageUrl
+        getImageUrl:swapi.getPersonImageUrl,
+        page:"/people"
     };
 };
 

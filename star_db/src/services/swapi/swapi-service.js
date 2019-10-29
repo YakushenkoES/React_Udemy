@@ -118,4 +118,35 @@ export default class SwapiService {
         return this._imageBase + `//starships/${id}.jpg`;
     };
     //End. Starships_________________________________________
+
+
+    // Vehicle____________________________________
+    getAllVehicles = async () => {
+        const res = await this.getResource("/vehicles/");
+        return res.results.slice(0, 6).map(this._transformVehicle);
+    };
+    getAllVehiclesRandom = async () =>{
+        const res = await this.getResource("/vehicles/");
+        return await this.getAllRandom(this.getVehicle,res.count, 6);
+    };
+    
+
+    getVehicle = async (id) => {
+        const vehicle = await this.getResource(`/vehicles/${id}/`);
+        return this._transformVehicle(vehicle);
+    };
+
+    _transformVehicle = (p) => {
+        return {
+            id: this._extractId(p.url),
+            name: p.name,
+            model: p.model,
+            costInCredits: p.cost_in_credits,
+        };
+    };
+    getVehicleImageUrl = ({ id }) => {
+        return this._imageBase + `/vehicles/${id}.jpg`;
+    };
+
+    // End. Vehicle____________________________________
 }

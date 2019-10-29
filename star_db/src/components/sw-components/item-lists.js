@@ -41,4 +41,16 @@ const StarshipList = compose(
     withData,
     withChildFunction(renderModelAndName)
 )(ItemList);
-export { PersonList, PlanetList, StarshipList };
+
+
+const mapVehiclesMethodsToProps = (swapi) => {
+    return {
+        getData: swapi.getAllVehiclesRandom
+    };
+};
+const VehicleList = compose(
+    withSwapiService(mapVehiclesMethodsToProps),
+    withData,
+    withChildFunction(renderModelAndName)
+)(ItemList);
+export { PersonList, PlanetList, StarshipList,VehicleList };
