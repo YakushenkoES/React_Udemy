@@ -69,7 +69,7 @@ export default class App extends Component {
                                     return <VehicleDetails itemId={match.params.id} />;
                                 }}
                             />
-                            <Route path="/starships" exact component={StarshipsPage} />
+                            {/* <Route path="/starships" exact component={StarshipsPage} /> */}
                             <Route path="/starships" exact component={StarshipsPage2} />
                             <Route
                                 path="/starships/:id"
