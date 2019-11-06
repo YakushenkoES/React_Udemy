@@ -4,7 +4,6 @@ import ErrorBoundary from "../components/error-boundary";
 
 const WithBookstoreService = (mapMethodsToProps) => (Wrapped) => {
     return (props) => (
-
         <ErrorBoundary>
             <BookStoreServiceConsumer>
                 {(bookstoreService) => {

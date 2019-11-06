@@ -1,9 +1,12 @@
 export default class BookstoreService {
-    _books = [ { title: "Harry Potter", author: "J. Roaling" }, { title: "Oldman and Sea", author: "E. Hammingway" } ];
-    getBooks=()=> {
+    _books = [
+        { id: 0, title: "Harry Potter", author: "J. Roaling", price:123, coverImage:"https://m.media-amazon.com/images/I/91GF+C+YRBL._AC_UL480_FMwebp_QL65_.jpg"},
+        { id: 1, title: "Oldman and Sea", author: "E. Hemingway", price: 87, coverImage:"https://m.media-amazon.com/images/I/61Lc9Qd0vgL._AC_UY327_FMwebp_QL65_.jpg" }
+    ];
+    getBooks = () => {
         return this._books;
-    }
-    getBook=(_id)=> {
-        return this._books[_id];
-    }
+    };
+    getBook = (_id) => {
+        return this._books.find((_b) => _b.id === _id);
+    };
 }

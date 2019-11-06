@@ -1,29 +1,24 @@
 import React, { Component } from "react";
-import ErrorBoundary from "../error-boundary";
-import ErrorButton from "../error-button";
-import bookStoreService from "../../services/bookstore-service";
-import { BookStoreServiceProvider } from "../../bookstore-service-context";
-import Book from '../book';
-import Spinner from '../spinner';
+import BookStoreService from "../../services/bookstore-service";
+import { Route, Switch } from "react-router-dom";
+import { HomePage, CartPage } from "../pages";
+import ShopHeader from '../shop-header';
 export default class App extends Component {
     state = {
         Error: false,
-        bookstore: new bookStoreService()
+        bookstore: new BookStoreService()
     };
     render() {
         return (
-            <BookStoreServiceProvider value={this.state.bookstore}>
-                <ErrorBoundary>
-                    <div>
-                        <ErrorButton />
-                        <p>Jesus has risen!</p>
-                        <Book id={0}/>
-                        <Book id={1}/>
-                        <Book id={2}/>
-                        <Spinner/>
-                    </div>
-                </ErrorBoundary>
-            </BookStoreServiceProvider>
+            <main role="main" className="container">
+                <ShopHeader/>
+                <Switch>
+                    <Route exact path="/" render={() => <HomePage />} />
+                    <Route exact path="/cart" render={() => <CartPage />} />
+
+                    <Route render={() => <h2>Page is not found</h2>} />
+                </Switch>
+            </main>
         );
     }
 }

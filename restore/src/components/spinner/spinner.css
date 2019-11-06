@@ -27,12 +27,14 @@
     width: 100%;
     height: 100%;
     background-color: #337ab7;
+    background-size: cover;
     animation: sk-folding-cube-angle 2.4s infinite linear both;
     transform-origin: 100% 100%;
 }
 
 .sk-folding-cube .sk-cube-2 {
     transform: scale(1.1) rotateZ(90deg);
+
 }
 
 .sk-folding-cube .sk-cube-3 {
@@ -42,7 +44,8 @@
 .sk-folding-cube .sk-cube-4 {
     transform: scale(1.1) rotateZ(270deg);
 }
-
+.sk-folding-cube .sk-cube-1:before {
+}
 .sk-folding-cube .sk-cube-2:before {
     animation-delay: 0.3s;
 }
