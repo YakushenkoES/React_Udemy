@@ -1,0 +1,10 @@
+.error-indicator{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+.error-indicator *{
+    margin-bottom: 1.5rem;
+}

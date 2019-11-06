@@ -1,3 +1,4 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-console.log("JC");
+import App from './components/app';
+ReactDOM.render(<App/>, document.getElementById("root"));
