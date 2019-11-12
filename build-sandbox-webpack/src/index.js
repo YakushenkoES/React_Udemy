@@ -4,7 +4,7 @@ import './main.scss';
 
 
 const App = ()=>{
-     return (<p>Hello!</p>);
+     return (<p>Christ has risen!</p>);
 };
     
 
