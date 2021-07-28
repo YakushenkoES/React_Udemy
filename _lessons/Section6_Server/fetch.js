@@ -1,6 +1,6 @@
 class SwapiService {
 
-    _apiBase = "https://swapi.co/api";
+    _apiBase = "https://swapi.dev/api";
 
     async getResource(url) {
         const res = await fetch(`${this._apiBase}${url}`);
@@ -75,7 +75,7 @@ swapi.getStarship(3)
 
 
 
-// getResource("https://swapi.co/api/people/2/")
+// getResource("https://swapi.dev/api/people/2/")
 //     .then(body => {
 //         console.log('body :', body);
 //     })
@@ -83,7 +83,7 @@ swapi.getStarship(3)
 //         console.error("Couldn't fetch", err);
 //     });
 
-// fetch("https://swapi.co/api/people/1/")
+// fetch("https://swapi.dev/api/people/1/")
 //     .then(resp => {
 //             console.log("Got response", resp.status);
 //             return resp.json();
